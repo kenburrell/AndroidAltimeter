@@ -26,6 +26,4 @@ Practice altimeter using an Android phone for the display via an OTG cable.
  *  Made publicly available under the terms of the Creative Commons License.
  *  
  *  Copyright(c) March 10, 2020.  Ken Burrell.
- */
-
-#include <Wire.h>
+ *
