@@ -23,8 +23,10 @@ Practice altimeter using an Android phone for the display via an OTG cable or HC
  *  QNH is increased or decreased by 0.01, 0.10, or 1.00 inch of Hg each time the respective  button
  *  is pushed on the Android.  QNH will be limited between 27.50 and 31.50 inches of Hg, inclusively.
  *  
+ *  Only the value of QNH is updated when in the button menu.
+ *
  *  When the SET button is pushed on the Android, the button menu will close and the display returned
- *  to full screen mode.
+ *  to full screen mode, and then all other data and altimeter hands will update.
  *  
  *  Made publicly available under the terms of the Creative Commons License.
  *  
