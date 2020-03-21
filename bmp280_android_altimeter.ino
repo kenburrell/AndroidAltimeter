@@ -9,14 +9,14 @@
  *   pressure sensor that is accurate to +/- 1 meter.  Using the Bosch BMP280 pressure sensor
  *   with an Arduino makes it possible for any Android phone to have an accurate altimeter.
  *   
- *  Hardware ICSP with Pin #19 for the sensor CSB.
+ *  SPI communication with BMP280 on an Arduino Pro Mini 5V/16MHz.
  *  
  *  To use, touch inside the Kollsman circle, which will bring up a button menu. Then change the
  *  value displayed in the Kollsman circle to the most recent QNH in inches of Hg obtained from a 
  *  nearby airport METAR.
  *  
- *  QNH is increased or decreased by 0.01 inch of Hg each time the Inc or Dec  button is pushed on 
- *  the Android.  QNH will be limited between 27.50 and 31.50 inches of Hg, inclusively.
+ *  QNH is increased or decreased by 0.01, 0.10, or 1.00 inch of Hg each time the respective  button
+ *  is pushed on the Android.  QNH will be limited between 27.50 and 31.50 inches of Hg, inclusively.
  *  
  *  When the SET button is pushed on the Android, the button menu will close and the display returned
  *  to full screen mode.
@@ -26,21 +26,17 @@
  *  Copyright(c) March 10, 2020.  Ken Burrell.
  */
 
-#include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP280.h>
-// #include <Adafruit_GFX.h>
-const int TS_LEFT = 927, TS_RT = 122, TS_TOP = 100, TS_BOT = 905;
-
 #include <VectorDisplay.h>
-SerialDisplayClass tft;
+SerialDisplayClass tft(Serial);
 VectorDisplayMessage msg;
 
 #define BMP_SCK 13
 #define BMP_MISO 12
 #define BMP_MOSI 11 
-#define BMP_CS 19
+#define BMP_CS 10
 Adafruit_BMP280 bmp(BMP_CS, BMP_MOSI, BMP_MISO,  BMP_SCK);
 
 float B = 29.92 ;
@@ -49,7 +45,8 @@ int clockCenterX=120;
 int clockCenterY=110+delta;
 
 void setup() {
-  tft.begin(); //115200, 240,320);
+  Serial.begin(9600);
+  tft.begin(9600,240,320); //115200, 240,320);
   tft.clear();
   if (!bmp.begin()) {  
     tft.text(50, 20,"Could not find a valid BMP280 sensor, check wiring!");
@@ -239,7 +236,7 @@ void loop() {
 
     if ( B != OldB ) {
         drawDisplay(B);
-     } else if ( H != H0 ) {
+    } else if ( H < (H0 - 3.0) || H > (H0 + 3.0) ) {
      // first clear hands of clock and re-draw clock numbers, then hands
         tft.fillCircle(clockCenterX, clockCenterY, 85, TFT_BLACK);
         for (int i=0; i<3; i++)
