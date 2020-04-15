@@ -1,20 +1,19 @@
 # AndroidAltimeter
-Practice altimeter using an Android phone for the display via an OTG cable or HC-05 Bluetooth module.
+Practice altimeter using an Android phone for the display via an OTG cable.
 
- *   Emulation of an Aircraft Altimeter on an Android phone for personal practice and fun use.
+ *  Emulation of an Aircraft Altimeter on an Android phone for personal practice and fun use.
  *   
- *   This utilizes either a Serial connection from the Arduino to the Android via an OTG cable
- *   or a Bluetooth 2.0 connection, requiring the VectorDisplay app (Omega Centauri Software) from 
- *   the PlayStore, free of charge under the MIT open software license.
+ *  This utilizes a Serial connection from the Arduino to the Android via an OTG cable
+ *  connection, requiring the VectorDisplay app (Omega Centauri Software) from the PlayStore, 
+ *  free of charge under the MIT open software license.
  *   
- *   Not all Android phones have a pressure sensor, and those that do may not have a Bosch BMP280
- *   pressure sensor that is accurate to +/- 1 meter.  Using the Bosch BMP280 pressure sensor
- *   with an Arduino makes it possible for any Android phone to have an accurate altimeter.
+ *  Not all Android phones have a pressure sensor, and those that do may not have a Bosch BMP280
+ *  pressure sensor that is accurate to +/- 1 meter.  Using the Bosch BMP280 pressure sensor
+ *  with an Arduino makes it possible for any Android phone to have an accurate altimeter.
  *   
- *  Hardware ICSP with Pin #10 for the sensor CSB, works with Arduino Nano, or Pro Mini.
+ *  This program is designed specifically for the Sparkfun Arduino Pro Micro 5V/16MHz board.
  *
- *  Full circuit diagram and packaging available in a PDF file upon request.  The OTG version is powered
- *  by the Android phone, but the Bluetooth version requires a minimum 3.7V battery connected to V-raw.
+ *  Full circuit diagram and packaging available in a PDF file upon request.
  *  
  *  To use, touch inside the Kollsman circle, which will bring up a button menu. Then change the
  *  value displayed in the Kollsman circle to the most recent QNH in inches of Hg obtained from a 
