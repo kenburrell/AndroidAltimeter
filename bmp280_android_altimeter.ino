@@ -25,19 +25,24 @@
  *  
  *  Copyright(c) March 10, 2020.  Ken Burrell.
  */
+ 
+int RXLED = 17; // The RX LED has a defined Arduino pin
+int TXLED = 30; // The TX LED has a defined Arduino pin
 
-#include <SPI.h>
+//#include <SPI.h> 
+#include <Wire.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP280.h>
 #include <VectorDisplay.h>
-SerialDisplayClass tft(Serial);
+SerialDisplayClass tft;
 VectorDisplayMessage msg;
 
-#define BMP_SCK 13
-#define BMP_MISO 12
-#define BMP_MOSI 11 
-#define BMP_CS 10
-Adafruit_BMP280 bmp(BMP_CS, BMP_MOSI, BMP_MISO,  BMP_SCK);
+//#define BMP_SCK 15
+//#define BMP_MISO 14
+//#define BMP_MOSI 16 
+//#define BMP_CS 10
+//Adafruit_BMP280 bmp(BMP_CS, BMP_MOSI, BMP_MISO,  BMP_SCK);
+Adafruit_BMP280 bmp ;; // I2C
 
 float B = 29.92 ;
 int delta = 15;
@@ -45,10 +50,16 @@ int clockCenterX=120;
 int clockCenterY=110+delta;
 
 void setup() {
-  Serial.begin(9600);
-  tft.begin(9600,240,320); //115200, 240,320);
+  
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(RXLED, OUTPUT); // Set RX LED as an output
+  pinMode(TXLED, OUTPUT); // Set TX LED as an output
+
+  tft.begin(); //115200, 240,320);
   tft.clear();
-  if (!bmp.begin()) {  
+  if (!bmp.begin(0x76)) 
+  //if (!bmp.begin()) 
+  {  
     tft.text(50, 20,"Could not find a valid BMP280 sensor, check wiring!");
     while (1);
   }
@@ -227,6 +238,11 @@ float T,P,H,QNH,PA,DA;
 float H0 = 0.0, OldB;
 
 void loop() {
+    
+    digitalWrite(LED_BUILTIN, LOW); // turn the LED off
+    digitalWrite(RXLED, HIGH); // set the LED off to save power
+    digitalWrite(TXLED, HIGH); // set the LED off to save power
+    
     QNH = 33.8639 * B ;
     T = bmp.readTemperature();
     P = 0.01 * bmp.readPressure();
@@ -258,12 +274,18 @@ void loop() {
      OldB = B;
      
      bool down = tft.readMessage(&msg);
+
+     digitalWrite(LED_BUILTIN, LOW); // turn the LED off
+     digitalWrite(RXLED, HIGH); // set the LED off to save power
+     digitalWrite(TXLED, HIGH); // set the LED off to save power
+     
      pixel_x = tft.getTouchX();
      pixel_y = tft.getTouchY();
      bool box = ( ( pixel_x >= 160 && pixel_x <= 220) &&
                   ( pixel_y >= 210 && pixel_y <= 240) ) ;
      delay (100);
-     if ( down  && box ) {
+     // if ( down  && box ) {
+     if ( down ) {
        tft.addButton('a', "+ 0.01");
        tft.addButton('b', "+ 0.10");
        tft.addButton('c', "+ 1.00");
@@ -311,11 +333,13 @@ void loop() {
               tft.deleteButton('y');
               tft.deleteButton('z');
               tft.deleteButton('E');
+              OldB = 0.0;
               break;
             }
           }
         // keep processing entries until SET hit
         } while ( 1 );
      }
+
      delay(500);
 }
