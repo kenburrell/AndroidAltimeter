@@ -13,7 +13,7 @@ Practice altimeter using an Android phone for the display via an OTG cable.
  *   
  *  This program is designed specifically for the Arduino Leonardo 5V/16MHz board.
  *
- *  Full circuit diagram and packaging available in a PDF file upon request.
+ *  Full circuit diagram, assembly and instructions are available in the accompanying PDF file.
  *  
  *  To use, touch inside the Kollsman circle, which will bring up a button menu. Then change the
  *  value displayed in the Kollsman circle to the most recent QNH in inches of Hg obtained from a 
