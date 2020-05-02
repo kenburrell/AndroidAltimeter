@@ -11,7 +11,7 @@ Practice altimeter using an Android phone for the display via an OTG cable.
  *  pressure sensor that is accurate to +/- 1 meter.  Using the Bosch BMP280 pressure sensor
  *  with an Arduino makes it possible for any Android phone to have an accurate altimeter.
  *   
- *  This program is designed specifically for the Sparkfun Arduino Pro Micro 5V/16MHz board.
+ *  This program is designed specifically for the Arduino Leonardo 5V/16MHz board.
  *
  *  Full circuit diagram and packaging available in a PDF file upon request.
  *  
