@@ -273,7 +273,7 @@ void loop() {
         drawDisplay(B);
       } else {
         // first clear hands of clock and re-draw clock numbers, then hands
-        tft.fillCircle(clockCenterX, clockCenterY, 85, TFT_BLACK);
+        tft.fillCircle(clockCenterX, clockCenterY, 88, TFT_BLACK);
         for (int i=0; i<3; i++)
         {
            tft.drawCircle(clockCenterX, clockCenterY, i, TFT_GREEN);
